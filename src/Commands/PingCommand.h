@@ -1,20 +1,19 @@
 #pragma once
 
-
 // ----- DEPENDENCIES -----
+#include "../BaseCommand.h"
 #include <dpp/dpp.h>
 #include <string>
-#include "../BaseCommand.h"
 
 // ----- CLASSES -----
-class PingCommand: public BaseCommand {
-  public:
-    void run(const dpp::slashcommand_t& event) {
-      event.reply("Pong!");
-      return;
-    };
+class PingCommand : public BaseCommand {
+public:
+  void run(const dpp::slashcommand_t &event) override {
+    event.edit_response("Pong!");
+    return;
+  };
 
-    std::string getCommandName() {
-        return "ping";
-    };
+  bool needsBot() override { return false; }
+
+  std::string getCommandName() override { return "ping"; };
 };
