@@ -13,15 +13,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not,see <https://www.gnu.org/licenses/>
 //
-// If you need to contact me, please contact me at ari@shirodev.dev
+// If you need to contact me, please contact me at ari@Kokabiel.net
 // I will see if I can reply.
 
 // ----- DEPENDANCIES -----
-#include "./BaseCommand.h"
-#include "./Commands/AboutCommand.h"
-#include "./Commands/PingCommand.h"
-#include <dpp/dpp.h>
-
+#include "./main.h"
 // ----- MAIN FUNCTION -----
 int main() {
   std::string BOT_TOKEN = std::getenv("BOT_TOKEN");
@@ -39,7 +35,19 @@ int main() {
       bot.global_bulk_command_create(REGISTERED_COMMANDS);
     }
 
+    std::cout
+        << "Apollyon Copyright (C) 2025 Kokabiel \n"
+        << "This program comes with ABSOLUTELY NO WARRANTY; for details type "
+           "`show w` \n"
+        << "This is free software, and you are welcome to redistribute it \n"
+        << "under certain conditions; type `show c` for details. \n"
+        << "This software is licensed under the GNU General Public License "
+           "v3.0 \n\n";
+
     std::cout << "Logged in as " + bot.me.username << "\n";
+
+    std::thread terminalHandler(&handleConsole);
+    terminalHandler.detach();
   });
 
   //  bot.on_log(dpp::utility::cout_logger());
