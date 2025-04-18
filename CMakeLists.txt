@@ -7,15 +7,14 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 # Create an executable
 add_executable(${PROJECT_NAME}
     src/main.cpp
+    src/TerminalCommands.cpp
 )
 
 # Find our pre-installed DPP package (using FindDPP.cmake).
 find_package(DPP REQUIRED)
 
 # Link the pre-installed DPP package.
-target_link_libraries(${PROJECT_NAME} 
-    ${DPP_LIBRARIES}
-)
+target_link_libraries(${PROJECT_NAME} ${DPP_LIBRARIES})
 
 # Include the DPP directories.
 target_include_directories(${PROJECT_NAME} PRIVATE

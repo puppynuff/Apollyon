@@ -35,14 +35,7 @@ int main() {
       bot.global_bulk_command_create(REGISTERED_COMMANDS);
     }
 
-    std::cout
-        << "Apollyon Copyright (C) 2025 Kokabiel \n"
-        << "This program comes with ABSOLUTELY NO WARRANTY; for details type "
-           "`show w` \n"
-        << "This is free software, and you are welcome to redistribute it \n"
-        << "under certain conditions; type `show c` for details. \n"
-        << "This software is licensed under the GNU General Public License "
-           "v3.0 \n\n";
+    printLicenseInfo();
 
     std::cout << "Logged in as " + bot.me.username << "\n";
 
