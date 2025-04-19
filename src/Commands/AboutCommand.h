@@ -15,8 +15,6 @@ public:
   std::string getCommandName() override { return "about"; }
 
   void run(const dpp::slashcommand_t &event, const dpp::cluster &bot) override {
-    event.thinking(false);
-
     dpp::embed embed =
         dpp::embed()
             .set_color(dpp::colors::black)
@@ -37,4 +35,11 @@ public:
   };
 
   bool needsBot() override { return true; }
+
+  dpp::slashcommand buildCommand(dpp::cluster &bot) override {
+    dpp::slashcommand aboutcommand("about", "Sends information about the bot",
+                                   bot.me.id);
+
+    return aboutcommand;
+  }
 };

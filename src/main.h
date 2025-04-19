@@ -8,6 +8,7 @@
 // ----- DEPENDANCIES -----
 #include "./BaseCommand.h"
 #include "./Commands/AboutCommand.h"
+#include "./Commands/EmbedCommand.h"
 #include "./Commands/PingCommand.h"
 #include "./TerminalCommands.h"
 #include <dpp/dpp.h>

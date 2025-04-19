@@ -18,32 +18,40 @@
 
 // ----- DEPENDANCIES -----
 #include "./main.h"
+#include "Commands/EmbedCommand.h"
+#include <dpp/appcommand.h>
 // ----- MAIN FUNCTION -----
 int main() {
   std::string BOT_TOKEN = std::getenv("BOT_TOKEN");
 
-  std::vector<BaseCommand *> COMMANDS = {new PingCommand(), new AboutCommand()};
+  std::vector<BaseCommand *> COMMANDS = {new PingCommand(), new AboutCommand(),
+                                         new EmbedCommand()};
 
   dpp::cluster bot(BOT_TOKEN);
 
-  std::vector<dpp::slashcommand> REGISTERED_COMMANDS = {
-      {"ping", "Replies with pong!", bot.me.id},
-      {"about", "Sends information about the bot", bot.me.id}};
+  std::vector<dpp::slashcommand> REGISTERED_COMMANDS;
 
-  bot.on_ready([&bot, &REGISTERED_COMMANDS](const dpp::ready_t &event) {
-    if (dpp::run_once<struct register_bot_commands>()) {
-      bot.global_bulk_command_create(REGISTERED_COMMANDS);
-    }
+  bot.on_ready(
+      [&bot, &REGISTERED_COMMANDS, &COMMANDS](const dpp::ready_t &event) {
+        for (int i = 0; i < COMMANDS.size(); i++) {
+          dpp::slashcommand command = COMMANDS[i]->buildCommand(bot);
 
-    printLicenseInfo();
+          REGISTERED_COMMANDS.emplace_back(command);
+        }
 
-    std::cout << "Logged in as " + bot.me.username << "\n";
+        if (dpp::run_once<struct register_bot_commands>()) {
+          bot.global_bulk_command_create(REGISTERED_COMMANDS);
+        }
 
-    std::thread terminalHandler(&handleConsole);
-    terminalHandler.detach();
-  });
+        printLicenseInfo();
 
-  //  bot.on_log(dpp::utility::cout_logger());
+        std::cout << "Logged in as " + bot.me.username << "\n";
+
+        std::thread terminalHandler(&handleConsole);
+        terminalHandler.detach();
+      });
+
+  // bot.on_log(dpp::utility::cout_logger());
 
   bot.on_slashcommand([&COMMANDS,
                        &bot](const dpp::slashcommand_t &event) -> void {

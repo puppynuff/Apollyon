@@ -22,6 +22,12 @@ public:
     return;
   }
 
+  virtual dpp::slashcommand buildCommand(dpp::cluster &bot) {
+    dpp::slashcommand emptycommand("null", "null", bot.me.id);
+
+    return emptycommand;
+  };
+
   virtual bool needsBot() { return false; }
 
   virtual std::string getCommandName() { return "Not defined"; };
